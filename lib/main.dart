@@ -1,5 +1,6 @@
 import 'package:covitrack/screens/emergency/SosScreen.dart';
 import 'package:covitrack/screens/login/login.dart';
+import 'package:covitrack/screens/symptoms/symptoms.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -112,6 +113,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
               child: Text('Sos'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SymptomsScreen()),
+                );
+              },
+              child: Text('Symptoms'),
             ),
           ],
         ),
