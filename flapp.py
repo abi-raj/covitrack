@@ -35,25 +35,42 @@ def writeData():
     cursor.execute("insert into users values('ab@gmial.com','21');")
     cursor.close()
 
+def checkUserInDB(email,phone):
+    cursor = getCon()
+    cursor.execute("select * from users where email=%s and mobile=%s",(email,phone))
+    data = cursor.fetchall()
+    cursor.close()
+    return True if len(data)>0 else False
 
 @app.route('/')
 def index():
     return "hello world"
 
-@app.route('/checkUser')
+@app.route('/checkUser',methods=['POST'])
 def checkUser():
-    return render_template('checkUser.html')
+    data=request.get_json()
+    email=data['email']
+    mobile=data['mobile']
+    return jsonify({"status":checkUserInDB(email,mobile)})
 
-@app.route('/getUsers')
+@app.route('/getUsers',methods=['GET'])
 def getUsers():
     #writeData()
     cursor = getCon()
     cursor.execute("SELECT * FROM users")
     users = cursor.fetchall()
+    result={}
+    patients = []
+   
     for user in users:
-        print(user)
+        patient = {
+            'email': user[0],
+            'mobile': user[1]
+        }
+        patients.append(patient)
     cursor.close()
-    return "render_template('getUsers.html', users=users)"
+    result['patients'] = patients
+    return jsonify(result)
 
 
 if __name__ == '__main__':
