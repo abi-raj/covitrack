@@ -1,10 +1,9 @@
+import 'package:covitrack/utils/APIcalls.dart';
 import 'package:flutter/material.dart';
 
 import '../colorConst.dart';
 
 class SosButton extends StatefulWidget {
-
-
   const SosButton();
   @override
   _SosButtonState createState() => _SosButtonState();
@@ -84,11 +83,20 @@ class _SosButtonState extends State<SosButton> with TickerProviderStateMixin {
             'HELP ME !',
             style: TextStyle(color: Colors.white, fontSize: 24),
           )),
-          onPressed: () {},
+          onPressed: () {
+            sendEmergency();
+          },
           shape: CircleBorder(),
         ),
       ),
     );
+  }
+
+  void sendEmergency() {
+    setState(() {
+      change = true;
+    });
+    APITasks().addEmergency('a@g.com');
   }
 }
 

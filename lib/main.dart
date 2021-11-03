@@ -1,6 +1,7 @@
 import 'package:covitrack/screens/emergency/SosScreen.dart';
 import 'package:covitrack/screens/login/login.dart';
 import 'package:covitrack/screens/symptoms/symptoms.dart';
+import 'package:covitrack/utils/APIcalls.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -128,8 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SOSscreen()));
+          APITasks().getPrescription('a@g.com');
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
