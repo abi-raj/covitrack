@@ -1,3 +1,4 @@
+import 'package:covitrack/utils/APIcalls.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -6,19 +7,19 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  late TextEditingController nameController;
+  late TextEditingController emailController;
   late TextEditingController numberController;
   bool onTapped = false;
   @override
   void initState() {
-    nameController = new TextEditingController();
+    emailController = new TextEditingController();
     numberController = new TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    nameController.dispose();
+    emailController.dispose();
     numberController.dispose();
     super.dispose();
   }
@@ -45,9 +46,9 @@ class _LoginScreenState extends State<LoginScreen> {
               runSpacing: 10.0,
               children: [
                 centerText(),
-                textField(nameController, TextInputType.name, 'Your Email'),
+                textField(emailController, TextInputType.name, 'Your Email'),
                 textField(numberController, TextInputType.number, 'Your Phone'),
-                button()
+                onTapped ? Center(child: CircularProgressIndicator()) : button()
               ],
             ),
           ),
@@ -83,15 +84,24 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           onPressed: () async {
-            if (nameController.text.length != 0 &&
-                numberController.text.length == 10) {
+            if (emailController.text.length != 0 &&
+                numberController.text.length != 0) {
               setState(() {
                 onTapped = true;
               });
-
+              final bool res = await APITasks()
+                  .checkLogin(emailController.text, numberController.text);
               setState(() {
                 onTapped = false;
               });
+
+              if (res) {
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  backgroundColor: Colors.red,
+                  content: Text("Invalid Email/Mobile"),
+                ));
+              }
             } else {
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 backgroundColor: Colors.red,
