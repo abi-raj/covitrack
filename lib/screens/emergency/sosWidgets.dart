@@ -1,7 +1,7 @@
 import 'package:covitrack/utils/APIcalls.dart';
 import 'package:flutter/material.dart';
 
-import '../colorConst.dart';
+import '../../utils/colorConst.dart';
 
 class SosButton extends StatefulWidget {
   const SosButton();
