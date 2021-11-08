@@ -1,3 +1,5 @@
+import 'package:covitrack/screens/home/Home.dart';
+import 'package:covitrack/utils/APIcalls.dart';
 import 'package:flutter/material.dart';
 
 class SymptomsScreen extends StatefulWidget {
@@ -61,15 +63,22 @@ class _SymptomsScreenState extends State<SymptomsScreen> {
             ),
             Center(
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   int count = 0;
                   for (var s in symp.keys) {
                     if (symp[s] == true) {
                       count++;
                     }
                   }
-                  int res = (count / 7 * 100).round();
+                  int res = 100 - (count / 7 * 100).round();
                   print(res);
+                  await APITasks().addDailyScore(res);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreen(),
+                    ),
+                  );
                 },
                 child: Text('Submit'),
               ),

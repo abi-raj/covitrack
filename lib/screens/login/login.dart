@@ -1,3 +1,4 @@
+import 'package:covitrack/screens/home/Home.dart';
 import 'package:covitrack/utils/APIcalls.dart';
 import 'package:covitrack/utils/colorConst.dart';
 import 'package:flutter/material.dart';
@@ -46,8 +47,8 @@ class _LoginScreenState extends State<LoginScreen> {
               runSpacing: 10.0,
               children: [
                 centerText(),
-                textField(emailController, TextInputType.name, 'Your Email'),
-                textField(numberController, TextInputType.number, 'Your Phone'),
+                textField(numberController, 'Your Patient ID'),
+                textField(emailController, 'Your Email'),
                 onTapped ? Center(child: CircularProgressIndicator()) : button()
               ],
             ),
@@ -57,13 +58,11 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget textField(controller, type, hint) {
+  Widget textField(controller, hint) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
-        maxLength: type == TextInputType.number ? 10 : null,
         controller: controller,
-        keyboardType: type,
         decoration: InputDecoration(
           hintText: hint,
         ),
@@ -90,16 +89,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTapped = true;
               });
               final bool res = await APITasks()
-                  .checkLogin(emailController.text, numberController.text);
+                  .checkLogin((numberController.text), emailController.text);
               setState(() {
                 onTapped = false;
               });
 
               if (res) {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   backgroundColor: Colors.red,
-                  content: Text("Invalid Email/Mobile"),
+                  content: Text("Invalid ID/email"),
                 ));
               }
             } else {

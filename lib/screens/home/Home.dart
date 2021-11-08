@@ -2,8 +2,14 @@ import 'package:covitrack/screens/emergency/SosScreen.dart';
 import 'package:covitrack/screens/home/cardWidget.dart';
 import 'package:covitrack/screens/login/login.dart';
 import 'package:covitrack/screens/symptoms/symptoms.dart';
+
+import 'package:covitrack/utils/SharedPrefs.dart';
 import 'package:covitrack/utils/colorConst.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../ProfileScreen.dart';
+import '../prescription/PrescriptionScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,6 +19,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String name = 'User';
+  @override
+  void initState() {
+    setName();
+    super.initState();
+  }
+
+  void setName() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      name = prefs.getString('name') ?? 'User';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -27,7 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProfileScreen()));
+                    },
                     icon: Icon(Icons.person_pin_outlined),
                   ),
                   IconButton(
@@ -40,9 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Hello'),
+                  Text('Hello,'),
                   Text(
-                    ' User!',
+                    ' $name!',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -124,8 +149,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 builder: (context) => SymptomsScreen()),
                           );
                         }),
-                        card(Icons.medical_services, 'Diagnostic', () {}),
-                        card(Icons.medical_services, 'Prescription', () {}),
+                        card(Icons.help_outline_rounded, 'Emergency', () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SOSscreen()),
+                          );
+                        }),
+                        card(Icons.note_alt_sharp, 'Prescription', () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Prescription()),
+                          );
+                        }),
                       ],
                     ),
                     SizedBox(
@@ -134,16 +171,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        card(Icons.help_outline_rounded, 'Emergency', () {
+                        card(Icons.electrical_services, 'Services', () {}),
+                        card(Icons.person_pin, 'Profile', () {
                           Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SOSscreen()),
-                          );
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfileScreen()));
                         }),
-                        card(Icons.person_pin, 'Profile', () {}),
-                        card(Icons.logout, 'Logout', () {
-                          Navigator.push(
+                        card(Icons.logout, 'Logout', () async {
+                          await locLogout();
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => LoginScreen()),

@@ -92,11 +92,11 @@ class _SosButtonState extends State<SosButton> with TickerProviderStateMixin {
     );
   }
 
-  void sendEmergency() {
+  void sendEmergency() async {
     setState(() {
       change = true;
     });
-    APITasks().addEmergency('a@g.com');
+    await APITasks().addEmergency();
   }
 }
 
