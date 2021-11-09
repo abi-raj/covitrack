@@ -31,6 +31,9 @@ dependencies:
   shared_preferences:
   http:
   intl:
+  flutter_local_notifications:
+  path_provider:
+  rxdart:
 dev_dependencies:
   flutter_test:
     sdk: flutter

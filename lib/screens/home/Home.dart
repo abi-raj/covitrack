@@ -5,6 +5,7 @@ import 'package:covitrack/screens/symptoms/symptoms.dart';
 
 import 'package:covitrack/utils/SharedPrefs.dart';
 import 'package:covitrack/utils/colorConst.dart';
+import 'package:covitrack/utils/notificationsApi.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,10 +21,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String name = 'User';
+
   @override
   void initState() {
+    NotificationsApi.initialize();
     setName();
+    listenNotifications();
     super.initState();
+  }
+
+  void listenNotifications() {
+    NotificationsApi.onNotifications.stream.listen((event) {
+      Navigator.pushNamed(context, '/medicine');
+    });
   }
 
   void setName() async {
@@ -170,7 +180,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        card(Icons.electrical_services, 'Services', () {}),
+                        card(Icons.electrical_services, 'Services', () {
+                          NotificationsApi.imageNotification();
+                        }),
                         card(Icons.person_pin, 'Profile', () {
                           Navigator.push(
                               context,
