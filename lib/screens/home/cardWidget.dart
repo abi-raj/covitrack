@@ -4,6 +4,7 @@ Widget card(icon, title, onPressed) {
   return InkWell(
     onTap: onPressed,
     child: Container(
+      margin: EdgeInsets.all(4),
       height: 100,
       width: 100,
       decoration: BoxDecoration(

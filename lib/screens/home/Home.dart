@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(15.0),
+          padding: const EdgeInsets.all(25.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text('Hello,'),
                   Text(
-                    ' $name!',
+                    '$name!',
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -105,9 +105,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 7,
                           ),
                           Text(
-                            'Schedule an e-visit\nand discuss the plan\nwith a doctor',
+                            'You are strong enough\nto fight through this.\nLet\'s beat Covid-19!.',
                             style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 13,
                               fontWeight: FontWeight.w400,
                               color: Colors.white,
                             ),
@@ -116,13 +116,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Container(
-                      height: 100,
-                      width: 100,
+                      height: 150,
+                      width: 150,
                       child: Image(
                         image: AssetImage('assets/mask.png'),
                         fit: BoxFit.cover,
                       ),
-                      color: Colors.red,
                     ),
                   ],
                 ),
