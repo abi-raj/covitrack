@@ -32,7 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void listenNotifications() {
     NotificationsApi.onNotifications.stream.listen((event) {
-      Navigator.pushNamed(context, '/medicine');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Prescription()),
+      );
     });
   }
 

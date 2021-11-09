@@ -1,7 +1,5 @@
-import 'package:covitrack/screens/emergency/SosScreen.dart';
 import 'package:covitrack/screens/login/login.dart';
-import 'package:covitrack/screens/symptoms/symptoms.dart';
-import 'package:covitrack/utils/APIcalls.dart';
+
 import 'package:covitrack/utils/SharedPrefs.dart';
 import 'package:flutter/material.dart';
 
